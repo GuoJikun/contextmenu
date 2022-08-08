@@ -1,9 +1,14 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import path from "path";
+import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "src"),
+    },
+  },
   plugins: [
     vue({
       style: {
@@ -15,9 +20,10 @@ export default defineConfig({
     cssCodeSplit: true,
     target: "esnext",
     lib: {
-      entry: path.resolve(__dirname, "src/components/contextmenu/index.ts"),
+      entry: resolve(__dirname, "src/components/contextmenu/index.ts"),
       name: "contextmenu",
       fileName: (format) => `contextmenu.${format}.js`,
+      formats: ["cjs", "es", "umd"],
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖

@@ -2,12 +2,20 @@
 import { defineComponent } from "vue";
 import ContextMenu from "./components/contextmenu";
 
+interface MenuItem {
+  text?: string;
+  command?: string;
+  disabled?: boolean;
+  divider?: boolean;
+  submenu?: MenuItem[];
+}
+
 export default defineComponent({
   components: {
     "yak-contextmenu": ContextMenu,
   },
   setup() {
-    const menus = [
+    const menus: MenuItem[] = [
       {
         command: "copy",
         text: "复制",
@@ -19,6 +27,21 @@ export default defineComponent({
       {
         command: "move",
         text: "移动",
+      },
+      {
+        divider: true,
+      },
+      {
+        command: "delete",
+        text: "删除",
+      },
+      {
+        command: "rename",
+        text: "重命名",
+      },
+      {
+        command: "new",
+        text: "新建",
       },
     ];
 
@@ -42,7 +65,7 @@ export default defineComponent({
         <p>最常用的方式，通过 <mark>menus</mark> 定义菜单的数据</p>
       </div>
 
-      <yak-contextmenu :menus="menus" @menu-click="menuClick">
+      <yak-contextmenu :options="menus" @menu-click="menuClick">
         <p>在此区域内显示自定义右键菜单</p>
         <p>在此区域内显示自定义右键菜单</p>
         <p>在此区域内显示自定义右键菜单</p>
@@ -64,7 +87,7 @@ export default defineComponent({
       </div>
 
       <yak-contextmenu
-        :menus="menus"
+        :options="menus"
         @menu-click="menuClick"
         menu-item-class="custom-item-style"
       >
@@ -88,7 +111,7 @@ export default defineComponent({
         </p>
       </div>
 
-      <yak-contextmenu :menus="menus" @menu-click="menuClick">
+      <yak-contextmenu :options="menus" @menu-click="menuClick">
         <p>在此区域内显示自定义右键菜单</p>
         <p>在此区域内显示自定义右键菜单</p>
         <p>在此区域内显示自定义右键菜单</p>

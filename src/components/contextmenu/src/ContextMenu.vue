@@ -3,108 +3,95 @@
     <slot></slot>
     <transition>
       <div
-        v-show="visiable"
+        v-show="visible"
         class="yak-content-menu-wrap"
-        :class="menuWrapClass"
+        :class="props.menuWrapClass"
         :style="{ left: menuPosition.left, top: menuPosition.top }"
       >
-        <slot name="menu" :menuList="menus">
-          <span
-            class="yak-content-menu-wrap-item"
-            :class="menuItemClass"
-            v-for="item in menus"
+        <slot name="menu" :menuList="props.options">
+          <ContentMenuItem
+            :class="props.menuItemClass"
+            v-for="item in props.options"
+            :divider="item.divider"
             :key="item.command"
             @click="menuClick(item)"
           >
             {{ item.text }}
-          </span>
+          </ContentMenuItem>
         </slot>
       </div>
     </transition>
   </div>
 </template>
 
-<script lang="ts">
-import {
-  ref,
-  reactive,
-  onMounted,
-  onBeforeUnmount,
-  defineComponent,
-  PropType,
-  toRef,
-} from "vue";
+<script lang="ts" setup>
+import { ref, reactive, onMounted, onBeforeUnmount, PropType } from "vue";
+import ContentMenuItem from "./content-menu-item.vue";
 
-interface MenuItem {
-  command: string;
-  text: string;
+export interface MenuItem {
+  text?: string;
+  command?: string;
+  disabled?: boolean;
+  divider?: boolean;
+  submenu?: MenuItem[];
 }
 
-type Menus = Array<MenuItem>;
-
-export default defineComponent({
-  name: "YakContextmenu",
-  props: {
-    menus: {
-      type: Array as PropType<Menus>,
-      default: () => {
-        return [];
-      },
-      required: true,
+const props = defineProps({
+  options: {
+    type: Array as PropType<MenuItem[]>,
+    default: () => {
+      return [];
     },
-    menuWrapClass: String,
-    menuItemClass: String,
   },
-  emits: ["menu-click"],
-  setup(props, { emit }) {
-    const wrapEl = ref();
-    const visiable = ref(false);
-
-    console.log(props);
-
-    // const menusList = toRef(props, "menus");
-
-    const menuPosition: any = reactive({
-      left: 0,
-      top: 0,
-    });
-
-    const showContentMenuFn = (ev: any) => {
-      ev.preventDefault();
-      const rootPosition = wrapEl.value.getBoundingClientRect();
-      const x = ev.x - rootPosition.left;
-      const y = ev.y - rootPosition.top;
-      menuPosition.top = `${y}px`;
-      menuPosition.left = `${x}px`;
-      visiable.value = true;
-    };
-
-    const hideContentFn = () => {
-      visiable.value = false;
-    };
-
-    const menuClick = (item: MenuItem) => {
-      emit("menu-click", item);
-    };
-
-    onMounted(() => {
-      wrapEl.value.addEventListener("contextmenu", showContentMenuFn);
-      wrapEl.value.addEventListener("click", hideContentFn);
-    });
-
-    onBeforeUnmount(() => {
-      wrapEl.value.removeEventListener("contextmenu", showContentMenuFn);
-      wrapEl.value.removeEventListener("click", hideContentFn);
-    });
-
-    return {
-      wrapEl,
-      visiable,
-      menuPosition,
-      menuClick,
-    };
-  },
+  menuWrapClass: String,
+  menuItemClass: String,
 });
+
+const emit = defineEmits(["menu-click"]);
+
+const wrapEl = ref<HTMLElement | null>(null);
+const visible = ref(false);
+
+const menuPosition: any = reactive({
+  left: 0,
+  top: 0,
+});
+
+const showContentMenuFn = (ev: any) => {
+  ev.preventDefault();
+  const rootPosition = (wrapEl.value as HTMLElement).getBoundingClientRect();
+  const x = ev.x - rootPosition.left;
+  const y = ev.y - rootPosition.top;
+  menuPosition.top = `${y}px`;
+  menuPosition.left = `${x}px`;
+  visible.value = true;
+};
+
+const hideContentFn = () => {
+  visible.value = false;
+};
+
+const menuClick = (item: MenuItem) => {
+  emit("menu-click", item);
+};
+
+onMounted(() => {
+  (wrapEl.value as HTMLElement).addEventListener(
+    "contextmenu",
+    showContentMenuFn
+  );
+  (wrapEl.value as HTMLElement).addEventListener("click", hideContentFn);
+});
+
+onBeforeUnmount(() => {
+  (wrapEl.value as HTMLElement).removeEventListener(
+    "contextmenu",
+    showContentMenuFn
+  );
+  (wrapEl.value as HTMLElement).removeEventListener("click", hideContentFn);
+});
+
+defineExpose(showContentMenuFn);
 </script>
 
 <style lang="scss">
@@ -115,22 +102,12 @@ export default defineComponent({
     box-sizing: border-box;
     background-color: #fff;
     position: absolute;
-    box-shadow: 0 1px 6px rgb(0 0 0 / 20%);
+    box-shadow: 0 1px 6px rgb(0 0 0 / 20%), 0 -1px 6px rgb(0 0 0 / 20%);
     border-color: 1px solid #eee;
     border-radius: 4px;
     padding: 5px 0;
     min-width: 160px;
-    &-item {
-      cursor: pointer;
-      display: block;
-      line-height: 28px;
-      font-size: 14px;
-      padding: 0 24px;
-      text-align: left;
-      &:hover {
-        background-color: #eee;
-      }
-    }
+    z-index: 10;
   }
 }
 </style>

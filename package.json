@@ -2,6 +2,7 @@
   "name": "yak-contextmenu",
   "version": "1.0.1",
   "keywords": [
+    "contexttext",
     "contextmenu",
     "vue3",
     "vue",
@@ -14,7 +15,7 @@
     "README.md"
   ],
   "main": "./dist/contextmenu.umd.js",
-  "module": "./dist/contextmenu.es.js",
+  "module": "./dist/contextmenu.mjs",
   "exports": {
     ".": {
       "import": "./dist/contextmenu.es.js",
@@ -31,15 +32,15 @@
     "type": "git",
     "url": "git+https://github.com/GuoJikun/contextmenu.git"
   },
-  "dependencies": {
-    "vue": "^3.2.13"
+  "preDependencies": {
+    "vue": "^3.2.37"
   },
   "devDependencies": {
-    "@types/node": "^16.9.6",
-    "@vitejs/plugin-vue": "^1.9.0",
-    "sass": "^1.42.0",
-    "typescript": "^4.4.3",
-    "vite": "^2.5.10",
+    "@types/node": "^16.11.47",
+    "@vitejs/plugin-vue": "^1.10.2",
+    "sass": "^1.54.3",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.4",
     "vue-tsc": "^0.3.0"
   },
   "license": "MIT"
