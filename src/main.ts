@@ -1,4 +1,7 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import ContextMenu from "./components/contextmenu";
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.use(ContextMenu);
+app.mount("#app");

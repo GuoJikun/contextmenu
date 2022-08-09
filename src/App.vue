@@ -11,9 +11,6 @@ interface MenuItem {
 }
 
 export default defineComponent({
-  components: {
-    "yak-contextmenu": ContextMenu,
-  },
   setup() {
     const menus: MenuItem[] = [
       {
@@ -64,8 +61,7 @@ export default defineComponent({
         <h2>基础用法</h2>
         <p>最常用的方式，通过 <mark>menus</mark> 定义菜单的数据</p>
       </div>
-
-      <yak-contextmenu :options="menus" @menu-click="menuClick">
+      <div class="content">
         <p>在此区域内显示自定义右键菜单</p>
         <p>在此区域内显示自定义右键菜单</p>
         <p>在此区域内显示自定义右键菜单</p>
@@ -73,10 +69,16 @@ export default defineComponent({
         <p>在此区域内显示自定义右键菜单</p>
         <p>在此区域内显示自定义右键菜单</p>
         <p>在此区域内显示自定义右键菜单</p>
+      </div>
+      <yak-contextmenu
+        :options="menus"
+        @menu-click="menuClick"
+        container=".content"
+      >
       </yak-contextmenu>
     </div>
 
-    <div class="wrap-item">
+    <!-- <div class="wrap-item">
       <div>
         <h2>自定义</h2>
         <p>
@@ -131,7 +133,7 @@ export default defineComponent({
           </div>
         </template>
       </yak-contextmenu>
-    </div>
+    </div> -->
 
     <div class="wrap-item">
       <table>
@@ -145,7 +147,7 @@ export default defineComponent({
         </thead>
         <tbody>
           <tr>
-            <td>menus</td>
+            <td>options</td>
             <td>配置菜单的数组。例子:[{command: 'copy', text: '复制'}]</td>
             <td>Array</td>
             <td>[]</td>
@@ -164,9 +166,21 @@ export default defineComponent({
           </tr>
           <tr>
             <td>menu-click</td>
-            <td>点击菜单时触发的事件，默认参数是一个 Object。</td>
+            <td>点击菜单时触发的事件。</td>
             <td>-</td>
             <td>-</td>
+          </tr>
+          <tr>
+            <td>container</td>
+            <td>触发菜单的容器</td>
+            <td>HTMLElement | css选择器</td>
+            <td>body</td>
+          </tr>
+          <tr>
+            <td>width</td>
+            <td>菜单的宽度</td>
+            <td>String | Number</td>
+            <td>200</td>
           </tr>
         </tbody>
       </table>
@@ -175,6 +189,9 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
+#app {
+  min-height: 98vh;
+}
 .wrap {
   width: 800px;
   margin: 0 auto;
