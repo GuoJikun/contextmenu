@@ -11,5 +11,9 @@ export type Menus = MenuItem[];
 
 export type Props = {
   options: Menus;
-  container: HTMLElement;
+  container?: HTMLElement;
+  menuWrapClass?: string;
+  menuItemClass?: string;
+  appendToBody?: boolean;
+  width?: number | string;
 };
