@@ -1,6 +1,5 @@
 <script lang="ts">
-import { defineComponent } from "vue";
-import ContextMenu from "./components/contextmenu";
+import { defineComponent, getCurrentInstance, onMounted } from "vue";
 
 interface MenuItem {
   text?: string;
@@ -41,12 +40,43 @@ export default defineComponent({
         text: "新建",
       },
     ];
+    const menuList: MenuItem[] = [
+      {
+        command: "new",
+        text: "新建",
+      },
+      {
+        command: "copy",
+        text: "复制",
+      },
+      {
+        command: "paste",
+        text: "粘贴",
+      },
+      {
+        command: "move",
+        text: "移动",
+      },
+      {
+        divider: true,
+      },
+      {
+        command: "delete",
+        text: "删除",
+      },
+      {
+        command: "rename",
+        text: "重命名",
+      },
+    ];
 
     const menuClick = (item: any) => {
       alert(`command：${item.command}；text：${item.text}`);
     };
+
     return {
       menus,
+      menuList,
       menuClick,
     };
   },
@@ -59,7 +89,7 @@ export default defineComponent({
     <div class="wrap-item">
       <div>
         <h2>基础用法</h2>
-        <p>最常用的方式，通过 <mark>menus</mark> 定义菜单的数据</p>
+        <p>最常用的方式，通过 <mark>options</mark> 定义菜单的数据</p>
       </div>
       <div class="content">
         <p>在此区域内显示自定义右键菜单</p>
@@ -76,6 +106,47 @@ export default defineComponent({
         container=".content"
       >
       </yak-contextmenu>
+    </div>
+
+    <div class="wrap-item">
+      <div>
+        <h2>通过指令的方式调用</h2>
+        <p>最常用的方式，通过 <mark>menus</mark> 定义菜单的数据</p>
+      </div>
+      <div
+        v-contextmenu="{
+          options: menus,
+          onMenuClick: menuClick,
+        }"
+      >
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+      </div>
+    </div>
+    <div class="wrap-item">
+      <div>
+        <h2>通过指令的方式调用</h2>
+        <p>最常用的方式，通过 <mark>menus</mark> 定义菜单的数据</p>
+      </div>
+      <div
+        v-contextmenu="{
+          options: menuList,
+          onMenuClick: menuClick,
+        }"
+      >
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+        <p>在此区域内显示自定义右键菜单</p>
+      </div>
     </div>
 
     <!-- <div class="wrap-item">

@@ -17,12 +17,11 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: true,
     target: "esnext",
     lib: {
       entry: resolve(__dirname, "src/components/contextmenu/index.ts"),
       name: "contextmenu",
-      fileName: (format) => `contextmenu.${format}.js`,
+      fileName: `contextmenu`,
       formats: ["cjs", "es", "umd"],
     },
     rollupOptions: {

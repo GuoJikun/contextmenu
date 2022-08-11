@@ -3,7 +3,7 @@
 ## 安装
 
 ```bash
-npm i yak-contextmenu
+npm i @ivy/contextmenu
 ```
 
 ## 使用
@@ -13,8 +13,8 @@ import {
   createApp
 } from "vue";
 import App from "./App.vue";
-import Contextmenu from "yak-contextmenu";
-import "yak-contextmenu/dist/index.css";
+import Contextmenu from "contextmenu";
+import "contextmenu/dist/index.css";
 
 createApp(App).use(Contextmenu).mount("#app");
 ```

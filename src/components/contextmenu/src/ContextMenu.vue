@@ -107,18 +107,22 @@ const menuClick = (item: MenuItem) => {
 };
 
 onMounted(() => {
-  console.log("onMounted", type(props.container));
+  window.addEventListener("click", hideContentFn);
   if (type(props.container) === "String") {
     const el = document.querySelector(props.container as string) as HTMLElement;
+    el?.addEventListener("click", hideContentFn, true);
     el?.addEventListener("contextmenu", showContentMenuFn);
   } else {
+    (props.container as HTMLElement).addEventListener(
+      "click",
+      hideContentFn,
+      true
+    );
     (props.container as HTMLElement).addEventListener(
       "contextmenu",
       showContentMenuFn
     );
   }
-
-  window.addEventListener("click", hideContentFn);
 });
 
 onBeforeUnmount(() => {
@@ -132,17 +136,6 @@ onBeforeUnmount(() => {
     );
   }
   window.removeEventListener("click", hideContentFn);
-});
-
-defineExpose({
-  show: (container: any, config = {}) => {
-    h("yak-content-menu", {
-      props: {
-        ...config,
-        container,
-      },
-    });
-  },
 });
 </script>
 

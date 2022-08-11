@@ -1,25 +1,34 @@
 {
-  "name": "yak-contextmenu",
-  "version": "1.0.1",
+  "name": "@jkun/contextmenu",
+  "version": "1.0.0",
   "keywords": [
-    "contexttext",
     "contextmenu",
     "vue3",
     "vue",
     "component",
-    "yak-contextmenu"
+    "mouseRightMenu",
+    "rightMenu"
   ],
   "files": [
-    "dist/contextmenu.es.js",
+    "dist/contextmenu.mjs",
     "dist/contextmenu.umd.js",
+    "dist/contextmenu.js",
+    "dist/style.css",
     "README.md"
   ],
-  "main": "./dist/contextmenu.umd.js",
-  "module": "./dist/contextmenu.mjs",
+  "main": "dist/contextmenu.umd.js",
+  "module": "dist/contextmenu.mjs",
+  "browser": "dist/contextmenu.mjs",
   "exports": {
     ".": {
       "import": "./dist/contextmenu.es.js",
-      "require": "./dist/contextmenu.umd.js"
+      "require": "./dist/contextmenu.umd.js",
+      "browser": "./dist/contextmenu.mjs"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css",
+      "browser": "./dist/style.css"
     }
   },
   "scripts": {
@@ -44,7 +53,8 @@
     "vue-tsc": "^0.3.0"
   },
   "license": "MIT",
-  "dependencies": {
-    "@vueuse/core": "^9.1.0"
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }
