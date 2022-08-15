@@ -1,6 +1,6 @@
 {
   "name": "@jkun/contextmenu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "contextmenu",
     "vue3",
@@ -16,14 +16,14 @@
     "dist/style.css",
     "README.md"
   ],
-  "main": "dist/contextmenu.umd.js",
+  "main": "dist/contextmenu.js",
   "module": "dist/contextmenu.mjs",
-  "browser": "dist/contextmenu.mjs",
+  "browser": "dist/contextmenu.umd.js",
   "exports": {
     ".": {
-      "import": "./dist/contextmenu.es.js",
-      "require": "./dist/contextmenu.umd.js",
-      "browser": "./dist/contextmenu.mjs"
+      "import": "./dist/contextmenu.mjs",
+      "require": "./dist/contextmenu.js",
+      "browser": "./dist/contextmenu.umd.js"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
