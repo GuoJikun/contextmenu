@@ -17,3 +17,13 @@ export type Props = {
   appendToBody?: boolean;
   width?: number | string;
 };
+
+export type ContextmenuItem =
+  | {
+      text: string;
+      command: string;
+      disabled?: boolean;
+      divider?: boolean;
+      children?: ContextmenuItem[];
+    }
+  | { divider: true };

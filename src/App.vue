@@ -1,17 +1,14 @@
 <script lang="ts">
 import { defineComponent, getCurrentInstance, onMounted } from "vue";
+import VContextmenu from "./components/contextmenu/src/index";
 
-interface MenuItem {
-  text?: string;
-  command?: string;
-  disabled?: boolean;
-  divider?: boolean;
-  submenu?: MenuItem[];
-}
+import type { ContextmenuItem } from "./components/contextmenu/src/typescript";
+import "./components/contextmenu/src/index.scss";
 
 export default defineComponent({
+  components: { VContextmenu },
   setup() {
-    const menus: MenuItem[] = [
+    const menus: ContextmenuItem[] = [
       {
         command: "copy",
         text: "复制",
@@ -34,13 +31,20 @@ export default defineComponent({
       {
         command: "rename",
         text: "重命名",
+        disabled: true,
       },
       {
         command: "new",
         text: "新建",
+        children: [
+          {
+            command: "rename",
+            text: "重命名",
+          },
+        ],
       },
     ];
-    const menuList: MenuItem[] = [
+    const menuList: ContextmenuItem[] = [
       {
         command: "new",
         text: "新建",
@@ -92,20 +96,16 @@ export default defineComponent({
         <p>最常用的方式，通过 <mark>options</mark> 定义菜单的数据</p>
       </div>
       <div class="content">
-        <p>在此区域内显示自定义右键菜单</p>
-        <p>在此区域内显示自定义右键菜单</p>
-        <p>在此区域内显示自定义右键菜单</p>
-        <p>在此区域内显示自定义右键菜单</p>
-        <p>在此区域内显示自定义右键菜单</p>
-        <p>在此区域内显示自定义右键菜单</p>
-        <p>在此区域内显示自定义右键菜单</p>
+        <v-contextmenu :options="menus" @menu-click="menuClick">
+          <p>在此区域内显示自定义右键菜单</p>
+          <p>在此区域内显示自定义右键菜单</p>
+          <p>在此区域内显示自定义右键菜单</p>
+          <p>在此区域内显示自定义右键菜单</p>
+          <p>在此区域内显示自定义右键菜单</p>
+          <p>在此区域内显示自定义右键菜单</p>
+          <p>在此区域内显示自定义右键菜单</p>
+        </v-contextmenu>
       </div>
-      <yak-contextmenu
-        :options="menus"
-        @menu-click="menuClick"
-        container=".content"
-      >
-      </yak-contextmenu>
     </div>
 
     <div class="wrap-item">

@@ -52,7 +52,6 @@ export { ContextmenuDirective, ContextmenuFunction };
 
 export default {
   install: (app: App, conf: PluginConf = { type: "component" }): void => {
-    console.log(conf.type, "1");
     const type = conf.type;
     if (type === "component") {
       app.component("yak-contextmenu", ContextMenu);

@@ -1,0 +1,60 @@
+.contextmenu__wrap {
+  position: relative;
+}
+.contextmenu {
+  position: absolute;
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: #fff;
+  box-shadow: 0 0px 10px 4px rgb(0 0 0 / 12%);
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 5px 0;
+  min-width: 160px;
+  z-index: 10;
+}
+
+.yak-content-menu {
+  position: fixed;
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: #fff;
+  position: absolute;
+  box-shadow: 0 0px 10px 4px rgb(0 0 0 / 12%);
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 5px 0;
+  min-width: 160px;
+  z-index: 10;
+}
+.modal-enter-from {
+  opacity: 0;
+}
+
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-from .modal-container,
+.modal-leave-to .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.jk-context-menu-item {
+  line-height: 28px;
+  font-size: 14px;
+  padding: 0 24px;
+  text-align: left;
+  border-radius: 2px;
+  transition: background-color 0.2s ease-in-out;
+  cursor: default;
+  &:hover {
+    background-color: #f1f1f1;
+  }
+}
+.is-divider {
+  background-color: #e1e3ef;
+  height: 1px;
+  margin: 5px 0;
+}
