@@ -1,13 +1,13 @@
 <template>
-  <div class="jk-context-menu-item" :class="{ 'is-divider': divider }">
+  <div class="jk-context-menu-item" :class="{ 'is-divider': props.divider }">
     <slot></slot>
   </div>
 </template>
 
 <script lang="ts" setup>
 const props = defineProps({
-  divider: Boolean,
-});
+  divider: Boolean
+})
 </script>
 
 <style lang="scss">

@@ -1,8 +1,5 @@
 <template>
-  <teleport
-    :disabled="!props.appendToBody"
-    :to="props.appendToBody ? 'body' : null"
-  >
+  <teleport :disabled="!props.appendToBody" :to="props.appendToBody ? 'body' : null">
     <transition name="modal">
       <div
         class="yak-content-menu"
@@ -12,7 +9,7 @@
         :style="{
           left: menuPosition.left,
           top: menuPosition.top,
-          width: `${Number(width)}px`,
+          width: `${Number(width)}px`
         }"
       >
         <slot name="menu" :menuList="props.options">
@@ -32,111 +29,93 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  ref,
-  reactive,
-  onMounted,
-  onBeforeUnmount,
-  PropType,
-  nextTick,
-  h,
-} from "vue";
-import ContentMenuItem from "./content-menu-item.vue";
-import { type } from "./utils";
-import type { Menus, MenuItem } from "./typescript";
+import { ref, reactive, onMounted, onBeforeUnmount, type PropType, nextTick } from 'vue'
+import ContentMenuItem from './content-menu-item.vue'
+import { type } from './utils'
+import type { Menus, MenuItem } from './typescript'
 
 const props = defineProps({
   options: {
     type: Array as PropType<Menus>,
     default: () => {
-      return [];
-    },
+      return []
+    }
   },
   menuWrapClass: String,
   menuItemClass: String,
   appendToBody: Boolean,
   width: {
     type: [Number, String],
-    default: 200,
+    default: 200
   },
   container: {
     type: [Object, String] as PropType<HTMLElement | String>,
     default: () => {
-      return document.body;
-    },
-  },
-});
+      return document.body
+    }
+  }
+})
 
-const emit = defineEmits(["menu-click"]);
+const emit = defineEmits(['menu-click'])
 
-const wrapEl = ref<null | HTMLElement>(null);
-const visible = ref(false);
+const wrapEl = ref<null | HTMLElement>(null)
+const visible = ref(false)
 
 const menuPosition: any = reactive({
   left: 0,
-  top: 0,
-});
+  top: 0
+})
 
 const showContentMenuFn = (ev: MouseEvent) => {
-  ev.preventDefault();
-  visible.value = true;
+  ev.preventDefault()
+  visible.value = true
   nextTick(() => {
-    const menuStyle = getComputedStyle(wrapEl.value as HTMLElement);
-    const rootW = menuStyle.width;
-    const rootH = menuStyle.height;
+    const menuStyle = getComputedStyle(wrapEl.value as HTMLElement)
+    const rootW = menuStyle.width
+    const rootH = menuStyle.height
 
     if (ev.x + parseFloat(rootW) > window.innerWidth) {
-      menuPosition.left = `${ev.x - parseFloat(rootW)}px`;
+      menuPosition.left = `${ev.x - parseFloat(rootW)}px`
     } else {
-      menuPosition.left = `${ev.x}px`;
+      menuPosition.left = `${ev.x}px`
     }
     if (ev.y + parseFloat(rootH) > window.innerHeight) {
-      menuPosition.top = `${ev.y - parseFloat(rootH)}px`;
+      menuPosition.top = `${ev.y - parseFloat(rootH)}px`
     } else {
-      menuPosition.top = `${ev.y}px`;
+      menuPosition.top = `${ev.y}px`
     }
-  });
-};
+  })
+}
 
 const hideContentFn = () => {
-  visible.value = false;
-};
+  visible.value = false
+}
 
 const menuClick = (item: MenuItem) => {
-  emit("menu-click", item);
-};
+  emit('menu-click', item)
+}
 
 onMounted(() => {
-  window.addEventListener("click", hideContentFn);
-  if (type(props.container) === "String") {
-    const el = document.querySelector(props.container as string) as HTMLElement;
-    el?.addEventListener("click", hideContentFn, true);
-    el?.addEventListener("contextmenu", showContentMenuFn);
+  window.addEventListener('click', hideContentFn)
+  if (type(props.container) === 'String') {
+    const el = document.querySelector(props.container as string) as HTMLElement
+    el?.addEventListener('click', hideContentFn, true)
+    el?.addEventListener('contextmenu', showContentMenuFn)
   } else {
-    (props.container as HTMLElement).addEventListener(
-      "click",
-      hideContentFn,
-      true
-    );
-    (props.container as HTMLElement).addEventListener(
-      "contextmenu",
-      showContentMenuFn
-    );
+    ;(props.container as HTMLElement).addEventListener('click', hideContentFn, true)
+    ;(props.container as HTMLElement).addEventListener('contextmenu', showContentMenuFn)
   }
-});
+})
 
 onBeforeUnmount(() => {
-  if (type(props.container) === "String") {
-    const el = document.querySelector(props.container as string) as HTMLElement;
-    el?.removeEventListener("contextmenu", showContentMenuFn);
+  if (type(props.container) === 'String') {
+    const el = document.querySelector(props.container as string) as HTMLElement
+    el?.removeEventListener('contextmenu', showContentMenuFn)
   } else {
-    (props.container as HTMLElement).removeEventListener(
-      "contextmenu",
-      showContentMenuFn
-    );
+    ;(props.container as HTMLElement).removeEventListener('contextmenu', showContentMenuFn)
   }
-  window.removeEventListener("click", hideContentFn);
-});
+  window.removeEventListener('click', hideContentFn)
+})
 </script>
 
 <style lang="scss">
